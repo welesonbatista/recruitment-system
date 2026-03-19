@@ -21,6 +21,7 @@ public class CompanyEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
   @NotBlank(message = "Username cannot be blank")
   @Pattern(regexp = "\\S+", message = "Username cannot contain whitespace")
@@ -31,13 +32,12 @@ public class CompanyEntity {
 
   @Length(min = 6, max = 50, message = "Password must be between 6 and 50 characters long")
   private String password;
-  
+
   private String website;
   private String name;
   private String description;
 
   @CreationTimestamp
-  private  LocalDateTime createdAt;
-
+  private LocalDateTime createdAt;
 
 }
