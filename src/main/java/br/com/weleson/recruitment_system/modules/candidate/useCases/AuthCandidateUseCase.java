@@ -31,7 +31,8 @@ public class AuthCandidateUseCase {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
-  public AuthCandidateResponseDTO execute(AuthCandidateRequestDTO authCandidateRequestDTO) throws AuthenticationException {
+  public AuthCandidateResponseDTO execute(AuthCandidateRequestDTO authCandidateRequestDTO)
+      throws AuthenticationException {
 
     var candidate = this.candidateRepository.findByUsername(authCandidateRequestDTO.username())
         .orElseThrow(() -> {
@@ -49,14 +50,14 @@ public class AuthCandidateUseCase {
     var expireIn = Instant.now().plus(Duration.ofHours(2));
     var token = JWT.create().withIssuer("recruitment_system")
         .withSubject(candidate.getId().toString())
-        .withClaim("roles", Arrays.asList("candidate"))
+        .withClaim("roles", Arrays.asList("CANDIDATE"))
         .withExpiresAt(expireIn)
         .sign(algorithm);
 
     var authCandidateResponse = AuthCandidateResponseDTO.builder()
-    .access_token(token)
-    .expires_in(expireIn.toEpochMilli())
-    .build();
+        .access_token(token)
+        .expires_in(expireIn.toEpochMilli())
+        .build();
 
     return authCandidateResponse;
   }

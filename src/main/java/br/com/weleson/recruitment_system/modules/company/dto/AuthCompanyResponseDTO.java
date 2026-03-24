@@ -1,4 +1,4 @@
-package br.com.weleson.recruitment_system.modules.candidate.dto;
+package br.com.weleson.recruitment_system.modules.company.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthCandidateResponseDTO {
-  private String access_token;
-  private Long expires_in;
+public class AuthCompanyResponseDTO {
+    private String access_token;
+    private Long expires_in;
 }

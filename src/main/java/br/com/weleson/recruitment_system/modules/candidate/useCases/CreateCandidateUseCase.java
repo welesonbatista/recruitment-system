@@ -5,8 +5,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.weleson.recruitment_system.exceptions.UserFoundException;
-import br.com.weleson.recruitment_system.modules.candidate.CandidateEntity;
 import br.com.weleson.recruitment_system.modules.candidate.CandidateRepository;
+import br.com.weleson.recruitment_system.modules.candidate.entities.CandidateEntity;
 
 @Service
 public class CreateCandidateUseCase {

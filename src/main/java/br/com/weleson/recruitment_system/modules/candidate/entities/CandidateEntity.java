@@ -1,4 +1,4 @@
-package br.com.weleson.recruitment_system.modules.candidate;
+package br.com.weleson.recruitment_system.modules.candidate.entities;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
