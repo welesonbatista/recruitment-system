@@ -1,9 +1,15 @@
 package br.com.weleson.recruitment_system.modules.company.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CreateJobDTO {
 
   @Schema(example = "vacancies for java developer", requiredMode = Schema.RequiredMode.REQUIRED)

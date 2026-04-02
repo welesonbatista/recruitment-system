@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class SecurityFilter extends OncePerRequestFilter {
+public class SecurityCompanyFilter extends OncePerRequestFilter {
 
   @Autowired
   private JWTProvider jwtProvider;
@@ -27,6 +27,13 @@ public class SecurityFilter extends OncePerRequestFilter {
     // SecurityContextHolder.getContext().setAuthentication(null);
     String header = request.getHeader("Authorization");
     String uri = request.getRequestURI();
+    String method = request.getMethod();
+
+    // Permitir POST em /company/ sem autenticação (criação de conta)
+    if (uri.equals("/company/") && "POST".equalsIgnoreCase(method)) {
+      filterChain.doFilter(request, response);
+      return;
+    }
 
     if (uri.startsWith("/company")) {
       if (header != null) {

@@ -40,7 +40,7 @@ public class CompanyContoller {
     } catch (UserFoundException e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     } catch (Exception e) {
-      return ResponseEntity.status(500).body("Internal Server Error");
+      return ResponseEntity.badRequest().body(e.getMessage());
     }
 
   }
