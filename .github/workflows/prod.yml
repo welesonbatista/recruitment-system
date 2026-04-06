@@ -9,16 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
       - name: Setup Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 17
       - name: Build project
         run: mvn clean install
       - name: Login docker
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
       - name: Build docer image
         run: docker build -t welesonbatista/recruitment-system .
       - name: Publish docker image
@@ -30,6 +30,9 @@ jobs:
       - name: Pull image docker hub
         run: docker pull welesonbatista/recruitment-system
       - name: remove container
-        run: docker rm -f container recruitment-system
+        run: docker rm -f recruitment-system || true
       - name: Run dcoker
-        run: docker run -d -p 8080:8080 -e DATABASE_URL=${{ secrets.DATABASE_URL }} -e DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }} -e DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} --name recruitment-system welesonbatista/recruitment-system
+        run: docker run -d --restart unless-stopped -p 8080:8080 -e DATABASE_URL="${{ secrets.DATABASE_URL }}" -e DATABASE_USERNAME="${{ secrets.DATABASE_USERNAME }}" -e DATABASE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}" --name recruitment-system welesonbatista/recruitment-system
+      - name: Show container status and logs
+        if: always()
+        run: docker ps -a && docker logs --tail 200 recruitment-system || true
