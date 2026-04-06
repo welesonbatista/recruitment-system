@@ -15,3 +15,11 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+      - name: Build project
+        run: mvn clean install
+      - name: Login docker
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build docer image
+        run: docker build -t welesonbatista/recruitment-system .
+      - name: Publish docker image
+        run: docker push welesonbatista/recruitment-system
