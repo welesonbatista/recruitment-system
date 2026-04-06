@@ -23,3 +23,13 @@ jobs:
         run: docker build -t welesonbatista/recruitment-system .
       - name: Publish docker image
         run: docker push welesonbatista/recruitment-system
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Pull image docker hub
+        run: docker pull welesonbatista/recruitment-system
+      - name: remove container
+        run: docker rm -f
+      - name: Run dcoker container recruitment-system
+        run: docker run -d -p 8080:8080 -e DATABASE_URL=${{ secrets.DATABASE_URL }} -e DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }} -e DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} --name recruitment-system welesonbatista/recruitment-system
